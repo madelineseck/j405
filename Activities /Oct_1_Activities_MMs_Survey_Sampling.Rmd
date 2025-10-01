@@ -103,7 +103,7 @@ population |> summarize(mean = mean(age), median = median(age), sd = sd(age))
 **A**
 Compare the means and standard deviations. Are they similar? Go back and re-run the sampling and statistics calculations with a smaller sample size. How do the results change?
 
-#The means and SD are different. In the sample size, the mean is slightly lower than the medieum.The second dataset is just a little lower on average and slightly more spread out. 
+#The means and SD are different. In the sample size, the mean is slightly lower than the medieum.The second dataset is just a little lower on average and slightly more spread out.  
 
 **A**:
 
