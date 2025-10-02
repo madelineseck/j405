@@ -81,3 +81,33 @@ Write up a lede and nutgraf of a story with the _best_ story idea you've found i
 ### Task 9: Save Your Work and Put it on GitHub
 
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
+
+
+
+#HW 5 
+#Madeline Seck
+
+#1 Using the 2020 violent crime rate, calculate the percentiles using `ntile()`. Save the results to a new dataframe called `md_cities_percentiles`. How many cities are above the 90th percentile?
+
+
+```{r}
+md_cities_percentiles <- md_cities_rates %>%
+  mutate(
+    violent_2020_percentile = ntile(violent_rate_2020, 100)  # creates percentiles
+  )
+above_90 <- md_cities_percentiles %>%
+  filter(violent_2020_percentile > 90)
+
+```
+
+#2Calculate the Interquartile Range of the 2020 violent crime rate using `summarize()` and R's `IQR()` function. The syntax is similar to how `mean()` works.
+```{r}
+md_cities_rates %>%
+  summarize(
+    violent2020_IQR = IQR(violent_rate_2020, na.rm = TRUE)
+  )
+```
+
+#3 Do the results change your best story idea from the previous assignment? Why or why not?
+The results do not change by story idea, Baltimoree still has the highest violent crime rate in Maryland. The data show more cities such a ocean city, cambride, Princess Anne, etc havinf high propwrty crime bast on their small population size
+
