@@ -1,0 +1,107 @@
+---
+title: "HW7_MandMs"
+date: 10/1/2025
+---
+
+
+In this assignment, you'll be picking up where you left off with the M&Ms activity. You'll load the data and perform some basic statistical analysis. Follow the steps below to complete the assignment.
+
+### Task 1: Load the tidyverse
+
+```{r}
+library(tidyverse)
+```
+
+
+### Task 2: Load an M&Ms dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/mandms.csv
+```{r}
+url <- "https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/mandms.csv"
+head(mandms)
+```
+
+
+### Task 3: Sample 5 rows of data from the dataset, and then sample 10 rows, saving each to separate dataframes called sample5 and sample10. Be sure to use set.seed(1234) before you start.
+```{r}
+set.seed(1234)
+sample5 <- sample_n(mandms, 5)
+sample10 <- sample_n(mandms, 10)
+sample5
+sample10
+
+```
+
+
+### Task 4: Calculate the mean, median and standard deviation of red M&Ms from each of the samples.
+```{r}
+mean_red_5 <- mean(sample5$red)
+median_red_5 <- median(sample5$red)
+sd_red_5 <- sd(sample5$red)
+
+mean_red_5
+median_red_5
+sd_red_5
+
+mean_red_10 <- mean(sample10$red)
+median_red_10 <- median(sample10$red)
+sd_red_10 <- sd(sample10$red)
+
+mean_red_10
+median_red_10
+sd_red_10
+
+```
+
+
+### Task 5: Calculate the mean, median and standard deviation of red M&Ms from the population
+
+```{r}
+mean_red_pop <- mean(mandms$red)
+median_red_pop <- median(mandms$red)
+sd_red_pop <- sd(mandms$red)
+mean_red_pop
+median_red_pop
+sd_red_pop
+```
+
+### Task 6: Make three histograms: one each for sample5, sample10 and the original dataset. Include a headline. Use a consistent binwidth.
+
+```{r}
+ggplot(sample5, aes(x = red)) +
+  geom_histogram(binwidth = 2, fill = "purple", color = "black") +
+  labs(title = "Distribution of Red M&Ms (Sample of 5)",
+       x = "Number of Red M&Ms",
+       y = "Count")
+
+ggplot(sample10, aes(x = red)) +
+  geom_histogram(binwidth = 2, fill = "pink", color = "black") +
+  labs(title = "Distribution of Red M&Ms (Sample of 10)",
+       x = "Number of Red M&Ms",
+       y = "Count")
+
+ggplot(mandms, aes(x = red)) +
+  geom_histogram(binwidth = 2, fill = "red", color = "black") +
+  labs(title = "Distribution of Red M&Ms (Population)",
+       x = "Number of Red M&Ms",
+       y = "Count")
+
+
+```
+
+
+### Task 7: Answer questions
+
+
+Compare the three sets of means, standard deviations and histograms. Which are more helpful to you in understanding the accuracy of the samples?
+#The means and meduans are close to the poluation. The median are slightly higher than the population. 
+
+What does this exercise tell you about the relationship between sample size and estimate accuracy?
+
+#larger samples lead to more reliable and accurate estimates of the population.
+
+How does random sampling introduce variation into statistical estimates?
+#Random sampling introduces variation because each sample includes different set of numbers, causing the results to change slightly each time.
+
+If you repeated this process, would the samples always be identical? Why or why not?
+#No, because the sameple size is always ramdom 
+
+When finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
