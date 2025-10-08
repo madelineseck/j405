@@ -46,5 +46,6 @@ Compare the two sets of means and standard deviations. Are they similar?
 
 Write a few sentences about what you found in the data. What does this tell you about the M&Ms dataset and about the act of random sampling?
 
+#the sample and the population had pretty similar means and standard deviations. This shows that random sampling can  give a good represetation of the whole dataset.
 
 When finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
