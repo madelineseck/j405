@@ -1,4 +1,5 @@
 ---
+#Madeline Seck\
 title: "Activities - Scatterplot, Correlation, Crime"
 author: "Wells"
 date: "2025-10-07"
@@ -24,6 +25,14 @@ Write 1-2 sentences summarizing each scatterplot.
 Name each person in your group who worked on this entry.
 
 **Write Answer #1:**
+
+#Graph 1, is the same chart as graph 2 but focused the elite colleges for Black students, it shows a few Black students at elite colleges as an outlier 
+
+#Graph 2, shows a negative corralation showing Black students with low graduation rate, many start college but dont finish.
+
+#Graph 3 shows that Hispanics are more likely to go to community college, and dont finish, showing a negative corralation in the graduation rate 
+
+#Graph 4 shows a  positive corralation for Asains with a high graduation rate of 80%.
 
 -------------------------------------------------------------------------------
 
@@ -75,7 +84,7 @@ How do we interpret the values in between?
 **Question: How would you describe the 0.783 correlation between aptitute and performance?**
 
 **A: Write your answer:**
-
+#The correlation between aptitude and performance is strongly positive. Consultants with higher aptitude scores tend to have higher performance scores, showing that as one variable increases, the other increases as well.
 
 ### Task 2: Create a scatterplot of aptitude and performance, using `geom_point()`
 
@@ -118,7 +127,7 @@ You'll load the data, perform some basic statistical analysis, and create a scat
 
 **write code below**
 ```{r}
-
+library(tidyverse)
 ```
 
 
@@ -126,6 +135,9 @@ You'll load the data, perform some basic statistical analysis, and create a scat
 
 **write code below**
 ```{r}
+pg_murder_temps <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/pg_murder_temps.csv")
+
+pg_murder_temps
 
 ```
 
@@ -135,6 +147,8 @@ You'll load the data, perform some basic statistical analysis, and create a scat
 
 **write code below**
 ```{r}
+pg_murder_temps |> 
+  summarize(correlation = cor(murders, temperature, method = "pearson"))
 
 ```
 
@@ -144,6 +158,14 @@ You'll load the data, perform some basic statistical analysis, and create a scat
 
 **write code below**
 ```{r}
+pg_murder_temps |>
+  ggplot(aes(x = temperature, y = murders, label = month)) +
+  geom_point(color = "purple", size = 3) +
+  geom_text(vjust = -1) +
+  geom_smooth(method = "lm", se = FALSE, color = "pink") 
+  ) +
+  theme_minimal()
+
 
 ```
 
@@ -152,13 +174,23 @@ You'll load the data, perform some basic statistical analysis, and create a scat
 
 **write code below**
 ```{r}
-
+pg_murder_temps |>
+  ggplot(aes(x = temperature, y = murders, label = month)) +
+  geom_point(color = "purple", size = 5) +
+  geom_text(vjust = -1) +
+  geom_smooth(method = "lm", se = FALSE, color = "pink") +
+  labs(
+    title = "Relationship Between Temperature and Murders in Prince George's County",
+    x = "Average Temperature (°F)",
+    y = "Number of Murders"
+  ) +
+  theme_minimal()
 ```
 
 
 ### Task 6: Describe the results of both the correlation calculation and the scatterplot.
 
 **Write Answer:**
-
+#There is a strong positive correlation between temperature and the number of murders. As temperatures rise, the number of murders also increases.
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
