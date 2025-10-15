@@ -3,6 +3,7 @@ title: "midterm_key_oct_8"
 author: "Rob Wells"
 date: "2025-10-15"
 output: html_document
+#Madeline Seck 
 ---
 
 ```{r setup, include=FALSE}
@@ -27,9 +28,9 @@ The dataset includes the name of the establishment, the number of points for cri
 
 ## Task 1: Read the data**
 ```{r}
-gdp_djia <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/montco_inspections.csv")
+inspections <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/montco_inspections.csv")
 
-View(gdp_djia)
+view(inspections)
 
 #your code here
 ```
@@ -37,21 +38,37 @@ View(gdp_djia)
 
 ## Task 2: Calculate the mean and standard deviation maximum and minimum of compliance scores. Put the results in a new dataframe called "compliance_stats." 
 ```{r}
+compliance_stats <- inspections %>%
+  summarise(
+    mean_score = mean(compliance_score, na.rm = TRUE),
+    sd_score = sd(compliance_score, na.rm = TRUE),
+    min_score = min(compliance_score, na.rm = TRUE),
+    max_score = max(compliance_score, na.rm = TRUE)
+  )
 
+# View the new dataframe
+compliance_stats
 
-#your code here
 ```
 
 ## Task 3: Create a histogram of the compliance scores with a vertical line showing the mean. Include a headline. Include a headline and label the x and y axes.
 ```{r}
-
-
+ggplot(inspections, aes(x = compliance_score)) +
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") + 
+  geom_vline(aes(xintercept = mean(compliance_score, na.rm = TRUE)), 
+             color = "red", linetype = "dashed", size = 1) +
+  labs(
+    title = "Compliance Scores in Montgomery County",
+    x = "Compliance Score",
+    y = "Number of Restaurants"
+  ) +
+  theme_minimal()
 ```
 
 ## Task 4: Write 2-3 sentences interpreting what the standard deviation and histogram tell us about the distribution of compliance scores. What would be newsworthy about this distribution? What's the story here? 
 
 **Write your answer here:**
-
+#This histogram shows some restaurant compliance scores being high, but some are pretty low. A story here would be the restaurant failing inspections and why
 
 ## Part 2: High School Athletics (30 points)
 
@@ -106,7 +123,8 @@ hs_participation |>
 # Task 9: In 2-3 sentences, explain what the correlation coefficient and scatterplot reveal about gender equity in Maryland high school sports participation. How do you interpret the school districts that are below the line vs those that are above? Which school districts are most worth examining further, and why? (10 points)
 
 **Write your answer here:**
-#There is a strong positive relationship correlation coefficient is closer to 1. School districts over the line have a higher girl participation compaired to boys. The school districts below the line have a lower female participation.
+#There is a strong positive relationship, as the correlation coefficient is close to 1. School districts above the line have higher girl participation compared to boy participation, while districts below the line have lower girl participation than boy participation.
+
 
 ## Part 3: Maryland Car Theft Rates (25 points)
 
@@ -114,26 +132,41 @@ Your editor has assigned you a story about car thefts in Maryland and wants you 
 
 #Task 10: Load the car thefts data
 ```{r}
-data <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/md_car_thefts.csv")
 
-
-#your code here
+car_thefts <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/md_car_thefts.csv")
+View(car_thefts)
 ```
 
 #Task 11: Using mutate, add a column that calculates the rate of car thefts for each county - you need to choose the per capita rate 
 ```{r}
-#your code here
+
+car_thefts <- car_thefts %>%
+  mutate(
+    population = as.numeric(population),
+    theft_2023 = as.numeric(`2023`),   # ensure numeric
+    theft_rate_per_1000 = (theft_2023 / population) * 1000
+  )
+
 ```
 
 #Task 12: Calculate the median car theft rate and the total number of car thefts statewide. Which counties have rates above the median? 
 ```{r}
-#your code here
+median_theft_rate <- median(car_thefts$theft_rate_per_1000, na.rm = TRUE)
+total_thefts_statewide <- sum(car_thefts$theft_2023, na.rm = TRUE)
+counties_above_median <- car_thefts %>%
+  filter(theft_rate_per_1000 > median_theft_rate) %>%
+  select(county, theft_rate_per_1000)
+median_theft_rate
+total_thefts_statewide
+counties_above_median
 ```
 
 
 #Task 13: Write 2-3 sentences describing what these calculations reveal about the distribution of car thefts in Maryland. What's the lede of a story about your findings? 
 
-**Write your answer here:**
+#In 2023, Maryland recorded 23,871 car thefts, averaging about one (0.96) per 1,000 residents. Baltimore City and Prince George’s County reported the highest rates because of the higher urban and suburban populations.
+
+#Lede: Prince George’s County and Baltimore City led the state of Maryland in per-capita auto thefts in 2023.
 
 ## Part 4: Data Analysis Scenario (20 points)
 
@@ -148,8 +181,7 @@ Write 3-4 sentences explaining:
 
 **Write your answer here:**
 
-# Excellent Response
-
+# To check if response times got worse over the past year, I would calculate the percent change from 2022 to 2023 to see how much incidents increased. To help readers visualize these trends, I would use a line graph with counties on the x-axis and number of incidents on the y-axis, showing one line for 2022 and another for 2023. Additional helpful information would include the population for 2022 and 2023.It would provide context for the changes in incident numbers.
 
 ### Submission Instructions
 - Save your work frequently
