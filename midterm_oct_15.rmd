@@ -179,8 +179,6 @@ Write 3-4 sentences explaining:
 2. What visualizations would help readers understand the trends? (5 points)
 3. What additional context or data would you need to make this a complete story? (5 points)
 
-**Write your answer here:**
-
 # To check if response times got worse over the past year, I would calculate the percent change from 2022 to 2023 to see how much incidents increased. To help readers visualize these trends, I would use a line graph with counties on the x-axis and number of incidents on the y-axis, showing one line for 2022 and another for 2023. Additional helpful information would include the population for 2022 and 2023.It would provide context for the changes in incident numbers.
 
 ### Submission Instructions
