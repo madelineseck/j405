@@ -222,7 +222,7 @@ ggplot(educ_viz_data,
 **It’s important for journalists to understand survey weighting because poll results don’t always reflect the population accurately. Some groups respond at higher rates than others and weighting adjusts for those imbalances so the findings better represent the public.**
 
 2. How might the differences between weighted and unweighted results affect how you would report on this data?
-
+ 
 **The differences between weighted and unweighted results show why weighting matters for accurate reporting. Unweighted results may over- or underrepresent certain groups, giving a misleading picture of public opinion.**
 
 
