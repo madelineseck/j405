@@ -82,7 +82,7 @@ Let's break down the key variables we'll focus on:
 - Demographics: `race`, `gender`, `educ` (education level), `income_cat`
 
 # Understanding Survey Weights
-
+   
 Before we dive into the analysis, let's examine the weights in our dataset to understand how they're distributed.
 
 ```{r examine-weights}
