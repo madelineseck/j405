@@ -6,6 +6,12 @@ date: "11-14-25"
 **"Madeline Seck"**
 
 ```{r}
-
+library(tidyverse)
 ```
+
+
+```{r}
+billboard <- read_csv("billboard.csv")
+```
+
 
