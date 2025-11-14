@@ -14,4 +14,66 @@ library(tidyverse)
 billboard <- read_csv("billboard.csv")
 ```
 
+```{r}
+view(billboard)
+```
+
+1. Describe a hypothesis about what makes a hit song or come up with some other question/hypothesis.
+##Songs with higher overall ratings spend more weeks at number one through the overall time periods. The earliest year is 1958 and lastest year is 2025 and the data includes 1178 songs.
+
+-- What does it contain and what time period does it cover?
+##the columns that are mose important my analysis are "Overall Rating" and  "Weeks at Number One."
+
+```{r}
+ggplot(billboard, aes(x = `Overall Rating`, y = `Weeks at Number One`)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  labs(
+    title = "Relationship Between Overall Rating and Weeks at #1",
+    x = "Overall Rating",
+    y = "Weeks at #1"
+  )
+
+```
+```{r}
+cor_test <- cor.test(billboard$`Overall Rating`, billboard$`Weeks at Number One`)
+print(cor_test)
+
+```
+##0.14 shows a weak positive relationship between a song’s overall rating and the number of weeks it spends at number one. The p-value is much less than 0.05. This allows us to reject the null hypothesis that there is no relationship between overall rating and chart success. Though overall rating alone only explains a small portion of a song’s chart longevity. 
+
+--What's missing that you might need or want?
+#There is an outlier with a rating of 6. Other factors, like genre, era, promotion or artist popularity, likely play a role.
+
+
+# For Weeks at Number One
+```{r}
+mean(billboard$`Weeks at Number One`, na.rm = TRUE)
+median(billboard$`Weeks at Number One`, na.rm = TRUE)
+min(billboard$`Weeks at Number One`, na.rm = TRUE)
+max(billboard$`Weeks at Number One`, na.rm = TRUE)
+sd(billboard$`Weeks at Number One`, na.rm = TRUE)
+
+```
+# For Overall Rating
+```{r}
+mean(billboard$`Overall Rating`, na.rm = TRUE)
+median(billboard$`Overall Rating`, na.rm = TRUE)
+min(billboard$`Overall Rating`, na.rm = TRUE)
+max(billboard$`Overall Rating`, na.rm = TRUE)
+sd(billboard$`Overall Rating`, na.rm = TRUE)
+
+```
+
+Next, propose a newsworthy hypothesis (or several of them) for your dataset. You'll be looking to find (or eliminate possible story ideas) using the techniques you've learned in this class. You'll start that effort this week by coming up with some theories or questions that you're interested in exploring that can be answered with the dataset you selected.
+
+#hypothesis
+#1. Songs released in more recent decades are in  the charts longer. 
+#2. 1. Songs released in order decades are in  the charts longer.
+#3. What top 3 genres are in the charts longer? I think pop is, hip-hop and country
+
+
+
+
+
 
