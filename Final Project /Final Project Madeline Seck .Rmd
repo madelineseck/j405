@@ -18,6 +18,8 @@ billboard <- read_csv("billboard.csv")
 view(billboard)
 ```
 
+
+#Part 1: Data Explorations
 1. Describe a hypothesis about what makes a hit song or come up with some other question/hypothesis.
 ##Songs with higher overall ratings spend more weeks at number one through the overall time periods. The earliest year is 1958 and lastest year is 2025 and the data includes 1178 songs.
 
@@ -72,7 +74,7 @@ Next, propose a newsworthy hypothesis (or several of them) for your dataset. You
 #2. 1. Songs released in order decades are in  the charts longer.
 #3. What top 3 genres are in the charts longer? I think pop is, hip-hop and country
 
-
+#Part 2 
 
 
 
