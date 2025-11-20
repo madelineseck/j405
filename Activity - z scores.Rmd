@@ -146,7 +146,7 @@ unusual_days |>
 
 Let's visualize these unusual days in the context of the full dataset. How do they differ from your answer on Task 3?
 
-**Write your answer here**
+**The data shows, there is extreme spikes in the data with a z-score than drastic drops. **
 
 ```{r plot-unusual-days}
 # Create a clean factor for the plot legend
@@ -217,7 +217,7 @@ ggplot(dow_summary, aes(x = day_of_week, y = avg_calls)) +
 
 We can also calculate z-scores that account for the day of the week pattern. How would you describe the day with the highest z-score without using the term "z-score"?
 
-**Write your answer here**
+**The day with the highest value stands out because the call count count was exceptionally busier than the usual range for that weekend. **
 
 ```{r day-of-week-z-scores}
 # Calculate day-of-week adjusted z-scores
@@ -307,4 +307,4 @@ top_outliers
 
 Based on our z-score analysis, what are some potential angles for reporting? What would your next steps be and what would you tell an editor about your findings?
 
-**Write your answer here**
+**Some potential angles for reporting include examining whether there were enough police officers available on September 11, 2001, to handle the surge in 9-1-1 calls. The next steps would involve comparing call-volume data to staffing levels on that day. I would also request police records, including the call log, response times between calls, how many officers were dispatched to each incident, and whether the department faced any staffing shortages or met the demand effectively. **
