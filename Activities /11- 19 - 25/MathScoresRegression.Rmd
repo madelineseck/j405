@@ -2,6 +2,7 @@
 ---
 title: "Activity: Linear Regression "
 date: 11-17-2025
+## Madeline Seck 
 ---
 
 ```{r}
@@ -39,7 +40,7 @@ schools |>
 
 The scatterplot shows the overall trend of the relationship between the FARMS percentage and the math test scores. The red line represents the linear regression line, which helps us understand the average relationship between the two variables. Based on what you see here, what's the relationship between FARMS percentage and math test scores?
 
-**WRITE YOUR ANSWER HERE**
+**The scatterplot shows a negative relationship between FARMS percentage and math test scores.**
 
 
 ### Task: Linear Regression Model (3 points)
@@ -58,7 +59,7 @@ In the middle, you can see the (Intercept) is 59.57897 and the FARMS coefficient
 
 Based on what you've learned so far, is this model worth using? What does it tell us about the nature of the relationship between FARMS percentage and math scores?
 
-**WRITE ANSWER HERE**
+**This model isn’t very useful because the FARMS percentage isn’t a significant predictor of math scores and it explains very little of the correlation between schools. There’s no strong or relationship between FARMS percentage and math performance in this data.**
 
 ### Task: Identifying Schools with Biggest Residuals (2 points)
 
@@ -83,10 +84,10 @@ schools <- schools |>
 ```
 The schools with the biggest positive residuals are performing better than expected, while the schools with the biggest negative residuals are performing worse than expected, based on their FARMS percentage. Look at the absolute values of the residuals; what are the largest differences between the predicted result and the actual math scores?
 
-**WRITE YOUR ANSWER HERE**
+**The biggest differences between the predicted and actual math scores are in the schools with the largest residuals. Schools with big positive residuals did much better than their FARMS percentage would predict, and schools with big negative residuals did much worse than expected.**
 
 ## Task: Evaluate the model (3 points)
 
 A school board member has said at a meeting that elementary schools with fewer students on free and reduced price meals do better on standardized math tests. Describe what conclusions you'd draw from this model's results and how it would influence a story pitch about the school board member and math scores.
 
-**WRITE YOUR ANSWER HERE**
+**Based on this model, I can’tconclude that schools with fewer students on free and reduced-price meals do better on math tests. The FARMS percentage isn’t a significant predictor. Socioeconomic status alone doesn’t  predict math performance. I would look at other factors such as programs, school funding, teachers, or strategies that might explain why some schools perform better. **
