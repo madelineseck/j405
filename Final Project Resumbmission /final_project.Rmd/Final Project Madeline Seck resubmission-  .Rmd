@@ -1,0 +1,199 @@
+---
+title: "Final Project Resubmission "
+author: "Madeline Seck "
+date: "12-12-25"
+---
+
+```{r}
+# Loading libraries
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+#loading Data Set
+billboard_data <- read_csv("Billboardforfinal.csv") |> 
+clean_names() |> 
+mutate(date_new = dmy(date)) |> 
+mutate(date_new = if_else(year(date_new) > 2024,  date_new - years(100), date_new)) |> 
+select(date_new, everything())
+view(billboard_data)
+```
+
+#Part 1: Data Explorations
+
+-- What does it contain and what time period does it cover?
+#The date contains 66 years of 1,178 songs from 1958 to 2024. 
+
+
+-- Describe a hypothesis about what makes a hit song or come up with some other question/hypothesis.
+#hypothesis: Songs with higher overall ratings spend more weeks at number one through the overall time periods. 
+#Null: There is no relationship between overall rating and chart success.
+#Question: What are nthe top 5 genres and the top five songs on the charts? 
+
+-- Which columns will be most important for your analysis?
+#The columns that are most important my analysis are "Overall Rating" and "Weeks at Number One"
+
+
+```{r}
+#Mean, Median, Min, Max and SD
+weeks_summary <- billboard_data |> 
+  summarise(
+    Mean = mean(weeks_at_number_one, na.rm = TRUE),
+    Median = median(weeks_at_number_one, na.rm = TRUE),
+    Min = min(weeks_at_number_one, na.rm = TRUE),
+    Max = max(weeks_at_number_one, na.rm = TRUE),
+    SD = sd(weeks_at_number_one, na.rm = TRUE)
+  )
+
+weeks_summary
+
+rating_summary <- billboard_data |> 
+  summarise(
+    Mean = mean(overall_rating, na.rm = TRUE),
+    Median = median(overall_rating, na.rm = TRUE),
+    Min = min(overall_rating, na.rm = TRUE),
+    Max = max(overall_rating, na.rm = TRUE),
+    SD = sd(overall_rating, na.rm = TRUE)
+  )
+
+rating_summary
+```
+-- Stats summarry 
+#The 1st data set shows the song spent on average 2 weeks in the charts, with a low 1 week and the highest being 19 weeks. 
+#The 2nd data shows the overvall rating of the songs are an average 6, with a low score of one and the highest being 10. 
+
+#corrlation test 
+```{r}
+cor_test <- cor.test(
+  billboard_data$overall_rating,
+  billboard_data$weeks_at_number_one,
+  use = "complete.obs"
+)
+
+print(cor_test)
+```
+#G plot 
+```{r}
+ggplot(billboard_data, aes(x = `overall_rating`, y = `weeks_at_number_one`)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  labs(
+    title = "Relationship Between Overall Rating and Weeks at #1",
+    x = "Overall Rating",
+    y = "Weeks at #1"
+  )
+
+```
+
+#The correlation test and the gplot both show examples of a weak positive relationship between a song’s overall rating and the number of weeks it spends at number one. The p-value is much less than 0.05. This allows us to reject the null hypothesis that there is no relationship between overall rating and chart success. Though overall rating alone only explains a small portion of a song’s chart longevity. 
+
+
+--What's missing that you might need or want?
+#There is an outlier with 19s week at number 1. Other factors that are not in the data set like or artist popularity, likely play a role.
+
+Next, propose a newsworthy hypothesis (or several of them) for your dataset. You'll be looking to find (or eliminate possible story ideas) using the techniques you've learned in this class. You'll start that effort this week by coming up with some theories or questions that you're interested in exploring that can be answered with the dataset you selected.
+
+#hypothesis
+#3.I think pop is, hip-hop and country are the top three genres.
+#other questions: What top 3 genres are in the charts longer? 
+
+#alternate
+#1. Songs released in more recent decades are in  the charts longer. 
+#2. 1. Songs released in older decades are in the charts longer.
+
+
+#Part 2 
+
+#Hypothesis:What top 3 genres are in the charts longer? I think pop is, hip-hop and country.
+#null: There is no difference in the genres at number one.
+#Aternative: Pop is, hip-hop and country spend more week at number one. 
+
+
+
+```{r}
+all_genres_anova  <- aov(`weeks_at_number_one` ~ `cdr_genre`, data = billboard_data)
+summary(all_genres_anova)
+```
+#ANOVA Test: I tested if the number of weeks a song stays a number on differs acrross the data set.  (f = 3.28, p < 0.001). The results show that the the genre of a song affece how long it stays ar number one. Some genres tend to have songs that stay on the top longer than others.
+
+
+```{r}
+genre_summary <- billboard_data |> 
+  group_by(`cdr_genre`) |> 
+  summarise(
+    avg_weeks = mean(`weeks_at_number_one`, na.rm = TRUE),
+    songs = n()
+  ) |> 
+  arrange(desc(avg_weeks)
+  )
+
+top_5_genres <- genre_summary |> 
+  slice_max(avg_weeks, n = 5)
+
+top_5_genres
+```
+
+```{r}
+ggplot(genre_summary, 
+       aes(x = reorder(`cdr_genre`, avg_weeks), y = avg_weeks)) +
+  geom_col(fill = "blue", alpha = 1) +
+  coord_flip() +
+  labs(
+    title = "Most played Genres Ranking",
+    x = "Genre",
+    y = "Weeks at Number One",
+  ) +
+  theme_minimal()
+```
+#Z-score  
+```{r}
+mean_weeks <- mean(billboard_data$`weeks_at_number_one`, na.rm = TRUE)
+sd_weeks <- sd(billboard_data$`weeks_at_number_one`, na.rm = TRUE)
+
+
+billboard_data <- billboard_data |>
+  mutate(
+    z_score = (`weeks_at_number_one` - mean_weeks) / sd_weeks
+  )
+
+
+billboard_data |>
+  arrange(desc(z_score)) |>
+  select(song, `cdr_genre`, `weeks_at_number_one`, z_score) |>
+  head(5
+  )
+```
+
+
+--Summary for top genres and g plot 
+#The dataset contains a total of 1,177 songs. I analyzed the top five genres remained at number one on the charts the longest. The top genres were Electronic/Dance; Latin, averaging 14 weeks, followed by Hip Hop; Reggae at nine weeks, and Pop; Reggae at 6.5 weeks with Latin and Folk/Country tied at six. These genres performed well regardless of other factors that are not included in the data set that might play a role. 
+
+-- Z-score summary for top songs 
+#The Z-score analyzed the top five songs that reached number one in their genres from 1958 to 2024. In hip hop, Old Town Road by Lil Nas X was at number one for 19 weeks in 2019, achieving a historic run of consecutive weeks at the top, according to Billboard Music News. It was later tied by A Bar Song (Tipsy) in 2024, a country-hip hop song similar in style to Old Town Road. On YouTube, the music video for Old Town Road has 1.4 billion views, compared to A Bar Song (Tipsy)’s 316 million views. One Sweet Day by Mariah Carey and Boyz II Men, released in 1995, spent 16 weeks at number one. Similarly, the Latin hit Despacito by Luis Fonsi featuring Daddy Yankee and Justin Bieber, released in 2017, also spent 16 weeks at number one and its music video has 8.8 billion views on YouTube. Tied with Despacito on the charts is Last Night, a country song released in 2023 by Morgan Wallen with 196 million views.
+
+#Sources: https://www.billboard.com/music/music-news/17-weeks-of-old-town-road-a-week-by-week-look-back-at-lil-nas-xs-historic-run-8524300/  ,  https://www.youtube.com/watch?v=r7qovpFAGrQ&list=RDr7qovpFAGrQ&start_radio=1 , https://www.youtube.com/watch?v=UXxRyNvTPr8&list=RDUXxRyNvTPr8&start_radio=1 , https://www.youtube.com/watch?v=kJQP7kiw5Fk&list=RDkJQP7kiw5Fk&start_radio=1, https://www.youtube.com/watch?v=bUjPPBxbQrQ&list=RDbUjPPBxbQrQ&start_radio=1
+
+
+#Part 3 
+- Story Pitch 
+#HL: 2024 Billboard wrap: What songs and genres dominates today's charts 
+
+- Main Findings 
+#The dataset contains a total of 1,177 songs. I analyzed the top five genres that remained at number one on the charts the longest. Electronic/dance and Latin songs lead, averaging 14 weeks at number one, followed by hip hop/reggae at nine weeks, and pop/reggae at 6.5 weeks, with Latin and folk/country tied at six weeks.
+#Old Town Road by Lil Nas X spent 19 weeks at number one and has 1.4 billion YouTube views. Despacito by Luis Fonsi featuring Daddy Yankee and Justin Bieber spent 16 weeks at number one and has 8.8 billion views. Morgan Wallen’s Last Night tied Despacito in 2023 with 196 million views.
+
+-- Potential Problems: 
+#The dataset does not include streams accros music platforms or or artist popularity, which likely influence chart success.
+#I reviewed YouTube views, but that does not reflect total audience engagement.
+#Outliers, at number one, can skew averages.
+
+-- Reporting plan 
+#Use Billboard chart data and YouTube statistics to identify trends and outliers 
+#Create charts showing genre and song weeks at number one in correlation with overall rating. 
+#Interview artist who were in those charts and music producers/experts to explain why certain genres do well.
+
+-- Additional Findings 
+#Run test for more data such as whether older songs have higher plays and how blended genres pop/reggae, pop/dance perform correlate between each other and if ratings correlate with charts.
+
+
