@@ -1,3 +1,4 @@
+3 revisions 
 ---
 title: "Final Project "
 author: "Madeline Seck "
@@ -9,7 +10,7 @@ date: "12-12-25"
 library(tidyverse)
 ```
 ```{r}
-#load Janitor 
+/#load Janitor 
 library(janitor)  
 ```
 
@@ -17,7 +18,8 @@ library(janitor)
 #viewing data 
 view(billboard)
 ```
-
+ 
+ 
 
 #Part 1: Data Explorations
 1. Describe a hypothesis about what makes a hit song or come up with some other question/hypothesis.
@@ -54,7 +56,7 @@ sd(billboard$`Overall Rating`, na.rm = TRUE)
 #The shows the average rating on songs are more o six. With the lowest rating, a one and the highest 10. 
 
 ```{r}
-all_genres_anova <- aov(`Weeks at Number One` ~ `CDR Genre`, data = billboard)
+all_genres_anova  <- aov(`Weeks at Number One` ~ `CDR Genre`, data = billboard)
 summary(all_genres_anova)
 ```
 #ANOVA Test: I tested if the number of weeks a song stays a number on differs acrross the data set.  (f = 3.28, p < 0.001). This means that some genres tend to stay at the top of the charts longer than others. Cetain genres hold the top spot longer. 
